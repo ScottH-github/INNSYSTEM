@@ -4,67 +4,41 @@ import { useState } from 'react';
 import styles from './ProjectDetail.module.css';
 import ProjectFinancials from '@/components/ProjectFinancials';
 
+import AIAnnotator from '@/components/AIAnnotator';
+
+import { generateQuotationStart, QuotationItem } from '@/lib/quotation-engine';
+
 export default function ProjectDetail() {
   const [activeTab, setActiveTab] = useState<'estimation' | 'contract' | 'financials'>('estimation');
+  const [quotationItems, setQuotationItems] = useState<QuotationItem[]>([]);
+
+  const handleAIComplete = (data: any) => {
+    if (data.detections) {
+      const newItems = generateQuotationStart(data.detections);
+      setQuotationItems(newItems);
+    }
+  };
+
+  const totalAmount = quotationItems.reduce((sum, item) => sum + item.totalPrice, 0);
+
 
   return (
     <div className={styles.workspace}>
-      <header className={styles.header}>
-        <div className={styles.topInfo}>
-          <div className={styles.breadcrumb}>
-            <span>Projects</span> / <span>大安區王公館建案</span>
-          </div>
-          <div className={styles.tabs}>
-            <button 
-              className={`${styles.tabBtn} ${activeTab === 'estimation' ? styles.activeTab : ''}`}
-              onClick={() => setActiveTab('estimation')}
-            >
-              Estimation (AI)
-            </button>
-            <button 
-              className={`${styles.tabBtn} ${activeTab === 'contract' ? styles.activeTab : ''}`}
-              onClick={() => setActiveTab('contract')}
-            >
-              Contract
-            </button>
-            <button 
-              className={`${styles.tabBtn} ${activeTab === 'financials' ? styles.activeTab : ''}`}
-              onClick={() => setActiveTab('financials')}
-            >
-              Financials
-            </button>
-          </div>
-        </div>
-        <div className={styles.actions}>
-          <button className={styles.secondaryBtn}>Save Draft</button>
-          <button className={styles.primaryBtn}>Submit for Review</button>
-        </div>
-      </header>
-
+// ...
       <div className={styles.mainLayout}>
         {activeTab === 'estimation' && (
           <>
+
             {/* Left: AI Canvas */}
             <div className={styles.canvasContainer}>
               <div className={styles.canvasHeader}>
                 <h3>Floor Plan Analysis</h3>
-                <div className={styles.aiStatus}>
-                  <span className={styles.pulse}></span> AI Vision Active
-                </div>
               </div>
               <div className={styles.viewport}>
-                <div className={styles.imageWrapper}>
-                  <img src="https://images.unsplash.com/photo-1574362848149-11496d93a7c7?q=80&w=1000&auto=format&fit=crop" alt="Floor Plan" />
-                  <div className={`${styles.detectionBox} ${styles.livingRoom}`} style={{ top: '20%', left: '15%', width: '40%', height: '35%' }}>
-                    <span className={styles.boxLabel}>Living Room (12.5 Ping)</span>
-                  </div>
-                  <div className={`${styles.detectionBox} ${styles.kitchen}`} style={{ top: '60%', left: '15%', width: '25%', height: '25%' }}>
-                    <span className={styles.boxLabel}>Kitchen</span>
-                  </div>
-                </div>
-              </div>
-              <div className={styles.canvasFooter}>
-                <p>AI identified 12 items. Drag to adjust areas or right-click to add markers.</p>
+                <AIAnnotator 
+                  initialImage={null} 
+                  onAnalysisComplete={handleAIComplete}
+                />
               </div>
             </div>
 
@@ -76,27 +50,35 @@ export default function ProjectDetail() {
               </div>
               
               <div className={styles.estimateContent}>
-                <div className={styles.section}>
-                  <div className={styles.sectionHead}>
-                    <h4>1. 客廳工程</h4>
-                    <span className={styles.sectionTotal}>$125,000</span>
+                {quotationItems.length === 0 ? (
+                  <div style={{padding: '2rem', textAlign: 'center', color: '#888'}}>
+                    Analyzing floor plan... Results will appear here.
                   </div>
-                  <div className={styles.itemList}>
-                    <div className={styles.item}>
-                      <div className={styles.itemMain}>
-                        <span className={styles.itemName}>平釘天花板 (中日矽酸鈣板)</span>
-                        <span className={styles.itemSpec}>永新集成角材, 12.5 坪</span>
-                      </div>
-                      <span className={styles.itemPrice}>$43,750</span>
+                ) : (
+                  <div className={styles.section}>
+                    <div className={styles.sectionHead}>
+                      <h4>AI Generated Items</h4>
+                      <span className={styles.sectionTotal}>${totalAmount.toLocaleString()}</span>
+                    </div>
+                    <div className={styles.itemList}>
+                      {quotationItems.map(item => (
+                        <div key={item.id} className={styles.item}>
+                          <div className={styles.itemMain}>
+                            <span className={styles.itemName}>{item.name}</span>
+                            <span className={styles.itemSpec}>{item.specification}, {item.quantity} {item.unit}</span>
+                          </div>
+                          <span className={styles.itemPrice}>${item.totalPrice.toLocaleString()}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                </div>
+                )}
               </div>
 
               <div className={styles.editorFooter}>
                 <div className={styles.totalRow}>
                   <span>Subtotal</span>
-                  <span>$170,000</span>
+                  <span>${totalAmount.toLocaleString()}</span>
                 </div>
                 <div className={styles.aiChat}>
                   <input type="text" placeholder="Ask AI to modify..." />
