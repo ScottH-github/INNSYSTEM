@@ -1,0 +1,106 @@
+.container {
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-size: 3rem;
+  letter-spacing: -1px;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.addBtn {
+  background: var(--foreground);
+  color: white;
+  padding: 0.8rem 1.8rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: var(--transition);
+}
+
+.addBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.tableWrapper {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.table th {
+  padding: 1.2rem 2rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid var(--border-color);
+  background: #fbfbf9;
+}
+
+.table td {
+  padding: 1.5rem 2rem;
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.projectName a {
+  font-weight: 600;
+  color: var(--foreground);
+  transition: var(--transition);
+}
+
+.projectName a:hover {
+  color: var(--accent-rose);
+}
+
+.badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.designing {
+  background: rgba(194, 157, 157, 0.1);
+  color: var(--accent-rose);
+}
+
+.other {
+  background: var(--background);
+  color: var(--text-muted);
+}
+
+.viewLink {
+  color: var(--accent-rose);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}

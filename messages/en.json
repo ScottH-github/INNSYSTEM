@@ -1,0 +1,19 @@
+{
+    "Sidebar": {
+        "dashboard": "Dashboard",
+        "projects": "Projects",
+        "clients": "Clients",
+        "directory": "Directory",
+        "aiLab": "AI Lab"
+    },
+    "Dashboard": {
+        "title": "Design Hub",
+        "welcome": "Welcome back, {name}",
+        "quickActions": "AI Quick Actions"
+    },
+    "Common": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "submit": "Submit"
+    }
+}

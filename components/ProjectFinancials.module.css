@@ -1,0 +1,138 @@
+.container {
+  padding: 2rem;
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.profitBadge {
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.4rem 1rem;
+  background: rgba(0,0,0,0.03);
+  border-radius: 20px;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.statCard {
+  padding: 1.5rem;
+  background: #fbfbf9;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.positive { color: #10b981; }
+.negative { color: #ef4444; }
+
+.chartsRow {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2rem;
+}
+
+.chartCard {
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.chartCard h4 {
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-muted);
+}
+
+.mockBarChart {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: 150px;
+  padding-bottom: 1rem;
+}
+
+.barItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 40px;
+}
+
+.barFill {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.barItem span {
+  font-size: 0.7rem;
+}
+
+/* Gauge */
+.gaugeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.gauge {
+  width: 120px;
+  height: 60px;
+  background: #f0f0ed;
+  border-top-left-radius: 120px;
+  border-top-right-radius: 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+.gaugeOverlay {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--accent-rose);
+  transform-origin: center top;
+  transition: transform 1s ease;
+}
+
+.gaugeLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}

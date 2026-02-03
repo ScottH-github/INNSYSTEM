@@ -1,0 +1,260 @@
+.dashboard {
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.header {
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-size: 3.5rem;
+  letter-spacing: -1px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 110fr);
+  gap: 2rem;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.col4 { grid-column: span 4; }
+.col8 { grid-column: span 8; }
+.col12 { grid-column: span 12; }
+
+.aiActionBtn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  transition: var(--transition);
+  text-decoration: none;
+  color: inherit;
+}
+
+.aiActionBtn:hover {
+  border-color: var(--accent-rose);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.aiIcon {
+  width: 50px;
+  height: 50px;
+  background: var(--background);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.aiText strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+.aiText p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.chartFilter {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.arrow {
+  color: var(--text-muted);
+  font-size: 1.2rem;
+}
+
+/* Line Chart */
+.chartPlaceholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.lineChart {
+  width: 100%;
+  height: 200px;
+}
+
+.chartLabels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+/* Donut Chart */
+.donutContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.donut {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 15px solid var(--background);
+  border-top-color: var(--accent-rose);
+  border-right-color: var(--accent-sage);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.donutInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.donutVal {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.donutUnit {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.legend {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.legendItem {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dotRose { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-rose); }
+.dotGray { width: 8px; height: 8px; border-radius: 50%; background: var(--border-color); }
+
+/* Staff List */
+.staffList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.staffItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.staffInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.85rem;
+}
+
+.staffAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--background);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.statPositive { color: var(--accent-rose); font-weight: 500; font-size: 0.85rem; }
+.statNeutral { color: var(--text-muted); font-size: 0.85rem; }
+.statNegative { color: var(--accent-sage); font-weight: 500; font-size: 0.85rem; }
+
+/* Bar Chart */
+.barChart {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 180px;
+  padding-top: 1rem;
+}
+
+.barItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.barTrack {
+  width: 60px;
+  height: 140px;
+  background: var(--background);
+  position: relative;
+}
+
+.barFill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  transition: var(--transition);
+}
+
+.barLabel {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 1100px) {
+  .col4, .col8 { grid-column: span 12; }
+}

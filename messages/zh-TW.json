@@ -1,0 +1,19 @@
+{
+    "Sidebar": {
+        "dashboard": "儀表板",
+        "projects": "專案管理",
+        "clients": "客戶名單",
+        "directory": "廠商名錄",
+        "aiLab": "AI 實驗室"
+    },
+    "Dashboard": {
+        "title": "設計總部",
+        "welcome": "歡迎回來，{name}",
+        "quickActions": "AI 快捷指令"
+    },
+    "Common": {
+        "save": "儲存",
+        "cancel": "取消",
+        "submit": "送出"
+    }
+}

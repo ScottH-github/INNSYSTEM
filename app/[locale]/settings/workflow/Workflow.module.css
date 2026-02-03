@@ -1,0 +1,232 @@
+.container {
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-size: 3rem;
+  letter-spacing: -1px;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.primaryBtn {
+  background: var(--foreground);
+  color: white;
+  padding: 0.7rem 1.8rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.secondaryBtn {
+  border: 1px solid var(--border-color);
+  padding: 0.7rem 1.8rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.canvas {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 3rem;
+  min-height: 500px;
+}
+
+.workflowContainer {
+  background: white;
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 2rem;
+  position: relative;
+}
+
+/* Nodes */
+.nodeStart, .nodeEnd {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-gray);
+}
+
+.nodeCircle {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+  background: white;
+}
+
+.nodeEnd .nodeCircle {
+  background: var(--accent-rose);
+  border-color: var(--accent-rose);
+}
+
+.connector {
+  width: 2px;
+  height: 60px;
+  background: var(--border-color);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stageWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nodeStage {
+  width: 280px;
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  transition: var(--transition);
+  position: relative;
+}
+
+.nodeStage:hover {
+  border-color: var(--accent-rose);
+  transform: scale(1.02);
+}
+
+.nodeHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.stepBadge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--accent-rose);
+  background: rgba(194, 157, 157, 0.1);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.deleteBtn {
+  font-size: 1.2rem;
+  color: var(--accent-gray);
+  line-height: 1;
+}
+
+.nodeContent h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.roleTag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: #f0f0ed;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.nodeContent p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.addStep {
+  width: 28px;
+  height: 28px;
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-rose);
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.addStep:hover {
+  transform: rotate(90deg);
+  border-color: var(--accent-rose);
+  background: var(--accent-rose);
+  color: white;
+}
+
+/* Config Panel */
+.configPanel {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 2rem;
+}
+
+.configPanel h3 {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-muted);
+}
+
+.formGroup input, .formGroup select {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: white;
+}
+
+.condition {
+  font-size: 0.75rem;
+  padding: 0.5rem;
+  background: #f0f0ed;
+  border-radius: 4px;
+  color: var(--foreground);
+}

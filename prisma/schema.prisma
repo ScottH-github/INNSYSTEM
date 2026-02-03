@@ -1,0 +1,365 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// --- 使用者與角色 ---
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  passwordHash  String?
+  googleId      String?   @unique
+  avatar        String?
+  role          Role      @default(STAFF)
+  status        UserStatus @default(ACTIVE)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  // 關連
+  projectsLed   Project[] @relation("DesignerProjects")
+  projectsManaged Project[] @relation("ManagerProjects")
+  reminders     Reminder[]
+  aiLogs        AIGenerationLog[]
+}
+
+enum Role {
+  ADMIN   // 系統管理員
+  BOSS    // 老闆
+  MANAGER // 主管
+  STAFF   // 員工
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+// --- 客戶與專案 ---
+
+model Client {
+  id            String    @id @default(cuid())
+  name          String
+  phone         String?
+  email         String?
+  lineId        String?
+  address       String?
+  notes         String?
+  preferredStyle String?
+  leadSource    String?
+  createdAt     DateTime  @default(now())
+  
+  projects      Project[]
+  contactLogs   ContactLog[]
+}
+
+model ContactLog {
+  id            String    @id @default(cuid())
+  clientId      String
+  client        Client    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  userId        String    // 記錄人員
+  type          String    // MEETING, CALL, LINE, EMAIL
+  subject       String
+  content       String?
+  createdAt     DateTime  @default(now())
+}
+
+model Project {
+  id            String    @id @default(cuid())
+  name          String
+  address       String?
+  area          Float?    // 坪數
+  budget        Float?
+  status        ProjectStatus @default(DISCUSSING)
+  
+  clientId      String
+  client        Client    @relation(fields: [clientId], references: [id])
+  
+  designerId    String?
+  designer      User?     @relation("DesignerProjects", fields: [designerId], references: [id])
+  
+  managerId     String?
+  manager       User?     @relation("ManagerProjects", fields: [managerId], references: [id])
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // 關連
+  drawings      Drawing[]
+  quotations    Quotation[]
+  contracts     Contract[]
+  schedules     Schedule[]
+  finances      FinanceRecord[]
+  reminders     Reminder[]
+  aiLogs        AIGenerationLog[]
+}
+
+enum ProjectStatus {
+  DISCUSSING    // 洽談中
+  DESIGNING     // 設計中
+  CONSTRUCTING  // 施工中
+  COMPLETED     // 已完工
+  CLOSED        // 結案
+}
+
+// --- 圖檔與 AI ---
+
+model Drawing {
+  id            String    @id @default(cuid())
+  projectId     String
+  project       Project   @relation(fields: [projectId], references: [id])
+  type          DrawingType
+  filePath      String
+  fileName      String
+  version       Int       @default(1)
+  uploadedBy    String
+  createdAt     DateTime  @default(now())
+}
+
+enum DrawingType {
+  FLOOR_PLAN    // 平面圖
+  CONSTRUCTION  // 施工圖
+  RENDER        // 3D 渲染圖
+}
+
+model AIGenerationLog {
+  id            String    @id @default(cuid())
+  projectId     String
+  project       Project   @relation(fields: [projectId], references: [id])
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  
+  promptText    String
+  originalPath  String?
+  generatedPath String
+  parameters    Json?     // 儲存 AI 模型參數
+  createdAt     DateTime  @default(now())
+}
+
+// --- 流程審核系統 (支援彈性調整層級) ---
+
+model ApprovalWorkflow {
+  id          String         @id @default(cuid())
+  name        String         // 如：「估價單審核流程」、「採購單審核流程」
+  description String?
+  steps       WorkflowStep[]
+  quotations  Quotation[]
+  createdAt   DateTime       @default(now())
+}
+
+model WorkflowStep {
+  id                String           @id @default(cuid())
+  workflowId        String
+  workflow          ApprovalWorkflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  stepOrder         Int              // 順序 (1, 2, 3...)
+  name              String           // 步驟名稱：如「主管初審」、「老闆複審」
+  requiredRole      Role?            // 指定需要審核的角色
+  requiredUserId    String?          // 或者指定特定人員審核
+  
+  approvalRecords   ApprovalRecord[]
+}
+
+model ApprovalRecord {
+  id            String       @id @default(cuid())
+  quotationId   String
+  quotation     Quotation    @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+  stepId        String
+  step          WorkflowStep @relation(fields: [stepId], references: [id])
+  approverId    String
+  status        ApprovalStatus
+  comment       String?
+  createdAt     DateTime     @default(now())
+}
+
+enum ApprovalStatus {
+  APPROVED
+  REJECTED
+}
+
+// --- 估價單 (更新後) ---
+
+model Quotation {
+  id              String           @id @default(cuid())
+  projectId       String
+  project         Project          @relation(fields: [projectId], references: [id])
+  version         Int              @default(1)
+  totalAmount     Float
+  status          QuotationStatus  @default(DRAFT)
+  
+  // 審核關連
+  workflowId      String?
+  workflow        ApprovalWorkflow? @relation(fields: [workflowId], references: [id])
+  currentStepOrder Int              @default(0) // 目前進行到第幾個步驟
+  
+  createdAt       DateTime         @default(now())
+  sections        QuotationSection[] // 細項分組 (如：客廳、臥室、基礎工程)
+  contract        Contract?
+  approvalRecords ApprovalRecord[]
+  finances        FinanceRecord[]
+}
+
+model QuotationSection {
+  id            String    @id @default(cuid())
+  quotationId   String
+  quotation     Quotation @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+  name          String    // 分組名稱：如「客廳」、「水電工程」
+  order         Int       @default(0)
+  items         QuotationItem[]
+}
+
+model QuotationItem {
+  id            String    @id @default(cuid())
+  sectionId     String
+  section       QuotationSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  description   String    // 項目名稱
+  spec          String?   // 規格描述
+  unit          String
+  quantity      Float
+  unitPrice     Float
+  amount        Float
+  notes         String?
+  order         Int       @default(0)
+}
+
+// --- 單價資料庫 (項目範本) ---
+
+model ItemLibrary {
+  id            String    @id @default(cuid())
+  category      String    // 如：木作、泥作
+  name          String    // 工項名稱
+  spec          String?   // 規格描述
+  unit          String    // 單位
+  unitPrice     Float     // 參考單價
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+enum QuotationStatus {
+  DRAFT
+  PENDING         // 審核中 (根據 currentStepOrder 判斷在哪一關)
+  APPROVED        // 全數通過
+  REJECTED        // 被退回
+  CONTRACTED      // 已轉合約
+}
+
+model Contract {
+  id              String    @id @default(cuid())
+  projectId       String
+  project         Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  quotationId     String?   @unique
+  quotation       Quotation? @relation(fields: [quotationId], references: [id])
+  
+  contractNo      String    @unique // 合約編號
+  totalAmount     Float
+  signedAt        DateTime?
+  startDate       DateTime?
+  endDate         DateTime?
+  status          ContractStatus @default(DRAFT)
+  filePath        String?   // 合約附件路徑
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+enum ContractStatus {
+  DRAFT
+  SIGNED
+  ONGOING
+  COMPLETED
+  TERMINATED
+}
+
+// --- 工班與廠商 ---
+
+model WorkCrew {
+  id            String    @id @default(cuid())
+  name          String
+  contactPerson String
+  phone         String
+  specialty     String    // 專長
+  rating        Float?
+  status        CrewStatus @default(ACTIVE)
+  
+  schedules     Schedule[]
+}
+
+model Vendor {
+  id            String    @id @default(cuid())
+  name          String
+  category      String    // 類別：材料/家具/設備
+  contactPerson String?
+  phone         String?
+  email         String?
+  bankCode      String?
+  bankAccount   String?
+  taxId         String?   // 統編
+  notes         String?
+  createdAt     DateTime  @default(now())
+}
+
+model Schedule {
+  id            String    @id @default(cuid())
+  projectId     String
+  project       Project   @relation(fields: [projectId], references: [id])
+  crewId        String
+  crew          WorkCrew  @relation(fields: [crewId], references: [id])
+  startDate     DateTime
+  endDate       DateTime
+  notes         String?
+  status        ScheduleStatus @default(PLANNED)
+}
+
+enum CrewStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum ScheduleStatus {
+  PLANNED
+  ONGOING
+  FINISHED
+  DELAYED
+}
+
+// --- 財務與提醒 ---
+
+model FinanceRecord {
+  id            String    @id @default(cuid())
+  projectId     String
+  project       Project   @relation(fields: [projectId], references: [id])
+  quotationId   String?
+  quotation     Quotation? @relation(fields: [quotationId], references: [id])
+  type          FinanceType
+  category      String
+  amount        Float
+  date          DateTime
+  description   String?
+  invoiceNo     String?
+  createdAt     DateTime  @default(now())
+}
+
+enum FinanceType {
+  INCOME  // 收入
+  EXPENSE // 支出
+}
+
+model Reminder {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  projectId     String?
+  project       Project?  @relation(fields: [projectId], references: [id])
+  title         String
+  description   String?
+  dueDate       DateTime
+  repeatType    String?   // DAILY, WEEKLY, MONTHLY
+  status        Boolean   @default(false) // true = 已完成
+  createdAt     DateTime  @default(now())
+}

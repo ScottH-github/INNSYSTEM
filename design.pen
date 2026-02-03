@@ -1,0 +1,60 @@
+# Interior Design ERP - Pencil.dev Design Specs
+
+## 1. Global Themes
+- **Background**: #F9F9F7 (Cream White)
+- **Primary Text**: #1A1A1A (Deep Charcoal)
+- **Accent 1**: #C29D9D (Muted Rose)
+- **Accent 2**: #9CA89C (Sage Green)
+- **Font**: Cormorant Garamond (Serif), Inter (Sans)
+
+## 2. Page: AI Estimation Workspace
+- **[Canvas Area]**: Central floor plan image with SVG overlays.
+- **[Component: DetectionBox]**: 
+  - Border: 2px solid var(--accent-rose)
+  - Fill: rgba(194, 157, 157, 0.1)
+  - Label: Floating pill on top-left.
+- **[Component: EstimateTable]**: 
+  - Grouped by "Sections" (Living Room, Infrastructure).
+  - Hover state on rows to show "AI Fix" button.
+
+## 4. Page: Client Management (CRM)
+- **[List View]**: Minimalist grid with client cards. 
+- **[Client Profile]**: 
+  - Left side: Basic info & Timeline of contact logs (Interactive feed).
+  - Right side: Visual mood board (preferred styles) & linked projects.
+- **[Interaction]**: One-click "Start Project" from client profile.
+
+## 5. Page: Vendor & WorkCrew Directory (SCM)
+- **[Category Filters]**: Chips for "Material", "Equipment", "Carpentry", "Plumbing".
+- **[Vendor Card]**: 
+  - Header: Verified badge & Rating (Star system).
+  - Body: Core specialties, primary contact, bank info snippet.
+- **[Inventory Insight]**: Linked PDF catalogs preview (using a masonry layout).
+
+## 6. Page: AI Lab (Image-to-Image)
+- **[Generation Workspace]**:
+  - Image Uploader for "Base Draft".
+  - Style Selection Drawer: (Nordic, Industrial, Japandi, etc.).
+  - Prompt Refinement Input: Natural language adjustments.
+  - Result Strip: Showing historical generations for comparison.
+
+## 7. Page: Workflow Configurator (Settings)
+- **[Canvas Area]**: Node-based visual editor.
+- **[Step Node]**: 
+  - Fields: Title (e.g., Manager Approval), Approver Type (Role/Individual), Threshold (Amount > $X).
+  - Relationship Lines: Visual arrows showing the flow.
+- **[Template Library]**: Pre-saved flows for "Small Project" vs "Premium Project".
+
+## 8. Page: Financial Analytics
+- **[Project P&L]**: Progress bar of budget vs actual spend.
+- **[Matrix]**: Incoming payments (Receivables) vs Outgoing vendor payments (Payables).
+- **[Chart]**: Monthly revenue/profit line chart in Accent Rose.
+
+## 9. Component: Project Workspace Tabs
+- **[Quotation Tool]**: The existing dual-pane AI workspace.
+- **[Contract Management]**: 
+  - View signed contract PDF.
+  - Milestone tracking (Deposit, 2nd Stage, Final).
+- **[Financials (P&L)]**: 
+  - Real-time margin calculation (Total Quotation - Total Vendor Expenses).
+  - Visual gauge for "Profit Health".
