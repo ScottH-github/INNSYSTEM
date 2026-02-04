@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './ProjectDetail.module.css';
 import ProjectFinancials from '@/components/ProjectFinancials';
 
@@ -15,12 +15,12 @@ export default function ProjectDetail() {
   const [libraryItems, setLibraryItems] = useState<any[]>([]);
 
   // Phase 5: Fetch Item Library
-  useState(() => {
+  useEffect(() => {
     fetch('/api/library')
       .then(res => res.json())
       .then(data => setLibraryItems(data))
       .catch(err => console.error(err));
-  });
+  }, []);
 
   const handleAIComplete = (data: any) => {
     if (data.detections) {
@@ -35,7 +35,31 @@ export default function ProjectDetail() {
 
   return (
     <div className={styles.workspace}>
-// ...
+      <header className={styles.header}>
+        <div className={styles.topInfo}>
+           <div className={styles.breadcrumb}>Projects / <span>王公館</span></div>
+           <div className={styles.tabs}>
+             <button 
+               className={`${styles.tabBtn} ${activeTab === 'estimation' ? styles.activeTab : ''}`}
+               onClick={() => setActiveTab('estimation')}
+             >
+               Estimation
+             </button>
+             <button 
+               className={`${styles.tabBtn} ${activeTab === 'financials' ? styles.activeTab : ''}`}
+               onClick={() => setActiveTab('financials')}
+             >
+               Financials
+             </button>
+             <button 
+               className={`${styles.tabBtn} ${activeTab === 'contract' ? styles.activeTab : ''}`}
+               onClick={() => setActiveTab('contract')}
+             >
+               Contract
+             </button>
+           </div>
+        </div>
+      </header>
       <div className={styles.mainLayout}>
         {activeTab === 'estimation' && (
           <>
