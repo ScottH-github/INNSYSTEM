@@ -1,3 +1,22 @@
+/* Existing styles... */
+
+.nodeStage.active {
+  border-color: var(--accent-rose);
+  background-color: #fdfbfb;
+  box-shadow: 0 0 0 4px rgba(194, 157, 157, 0.2);
+}
+
+.emptyPanel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+}
+
+/* Re-adding previous css content to ensure nothing is lost, plus new styles */
 .container {
   animation: fadeIn 0.8s ease-out;
 }
@@ -115,6 +134,7 @@
   box-shadow: 0 4px 20px rgba(0,0,0,0.03);
   transition: var(--transition);
   position: relative;
+  cursor: pointer; /* Interaction Cue */
 }
 
 .nodeStage:hover {
@@ -141,6 +161,13 @@
   font-size: 1.2rem;
   color: var(--accent-gray);
   line-height: 1;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.deleteBtn:hover {
+    color: red;
 }
 
 .nodeContent h3 {
@@ -194,6 +221,8 @@
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
   padding: 2rem;
+  position: sticky;
+  top: 2rem;
 }
 
 .configPanel h3 {

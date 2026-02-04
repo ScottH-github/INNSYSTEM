@@ -5,6 +5,7 @@ import styles from './ProjectDetail.module.css';
 import ProjectFinancials from '@/components/ProjectFinancials';
 
 import AIAnnotator from '@/components/AIAnnotator';
+import ContractPreview from '@/components/contract/ContractPreview';
 
 import { generateQuotationStart, QuotationItem } from '@/lib/quotation-engine';
 
@@ -91,20 +92,23 @@ export default function ProjectDetail() {
 
         {activeTab === 'contract' && (
           <div className={styles.fullWidthContent}>
-            <div className={styles.contractPreview}>
-              <div className={styles.contractHeader}>
-                <h3>Contract: #CTR-2026-001</h3>
-                <span className={styles.statusBadge}>DRAFT</span>
-              </div>
-              <div className={styles.contractBody}>
-                <p><strong>甲方：</strong> 王小明</p>
-                <p><strong>乙方：</strong> L'Atelier 室內設計</p>
-                <div className={styles.placeholderDoc}>
-                  [ 合約條款預覽區域 ]
-                  <br/>
-                  根據估價單 #QT-2026-04 產生，總金額 $1,250,000
-                </div>
-              </div>
+            <div className={styles.contractToolbar} style={{marginBottom: '1rem', display: 'flex', justifyContent: 'flex-end', gap: '1rem'}}>
+               <span className={styles.statusBadge}>DRAFT</span>
+               <button className={styles.secondaryBtn} onClick={() => window.print()}>🖨️ Print / Export PDF</button>
+            </div>
+            <div className={styles.contractScroll}>
+              <ContractPreview 
+                project={{
+                   name: '大安區王公館建案',
+                   clientName: '王小明',
+                   address: '台北市大安區和平東路二段',
+                   date: new Date().toLocaleDateString()
+                }}
+                items={quotationItems.length > 0 ? quotationItems : [
+                  {id: 'demo1', category: '拆除工程', name: '全室拆除', specification: '含清運', quantity: 1, unit: '式', unitPrice: 85000, totalPrice: 85000}
+                ]}
+                totalAmount={quotationItems.length > 0 ? totalAmount : 85000}
+              />
             </div>
           </div>
         )}

@@ -1,0 +1,136 @@
+.contractPage {
+  background: white;
+  width: 210mm; /* A4 width */
+  min-height: 297mm; /* A4 height */
+  padding: 20mm;
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  font-family: 'Times New Roman', 'KaiTi', serif; /* Formal serif font */
+  color: #000;
+  position: relative;
+}
+
+@media print {
+  .contractPage {
+    width: 100%;
+    margin: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+  
+  /* Hide typical UI elements when printing */
+  /* This needs to be handled by global print styles usually, but component level helps */
+}
+
+.header {
+  text-align: center;
+  border-bottom: 2px solid #000;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+.brand {
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+
+.header h1 {
+  font-size: 2rem;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.parties {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.party {
+  width: 45%;
+}
+
+.party h4 {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.party p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+}
+
+.terms h3 {
+  font-size: 1.1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  background: #eee;
+  padding: 4px 8px;
+}
+
+.terms p {
+  margin: 0.5rem 0;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+.appendix {
+  margin-top: 2rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.table th {
+  background: #f9f9f9;
+}
+
+.table .right {
+  text-align: right;
+}
+
+.signatures {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4rem;
+  page-break-inside: avoid;
+}
+
+.signBlock {
+  width: 40%;
+}
+
+.signBox {
+  height: 100px;
+  border-bottom: 1px solid #000;
+  margin-top: 1rem;
+  position: relative;
+}
+
+.footer {
+  position: absolute;
+  bottom: 10mm;
+  right: 20mm;
+  font-size: 0.8rem;
+  color: #666;
+}
