@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "../../globals.css";
+import "@/app/globals.css";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import { NextIntlClientProvider } from 'next-intl';
@@ -15,7 +15,7 @@ export default async function LocaleLayout({
   params
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
   const messages = await getMessages();
@@ -34,31 +34,6 @@ export default async function LocaleLayout({
             </div>
           </div>
         </NextIntlClientProvider>
-        <style jsx global>{`
-          .app-container {
-            display: flex;
-            min-height: 100vh;
-          }
-          .main-wrapper {
-            flex: 1;
-            margin-left: 80px;
-            display: flex;
-            flex-direction: column;
-          }
-          .content-area {
-            flex: 1;
-            padding: 2rem 3.5rem;
-            margin-top: 70px;
-          }
-          @media (max-width: 768px) {
-            .main-wrapper {
-              margin-left: 0;
-            }
-            .content-area {
-              margin-bottom: 60px;
-            }
-          }
-        `}</style>
       </body>
     </html>
   );

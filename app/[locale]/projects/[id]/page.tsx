@@ -12,10 +12,20 @@ import { generateQuotationStart, QuotationItem } from '@/lib/quotation-engine';
 export default function ProjectDetail() {
   const [activeTab, setActiveTab] = useState<'estimation' | 'contract' | 'financials'>('estimation');
   const [quotationItems, setQuotationItems] = useState<QuotationItem[]>([]);
+  const [libraryItems, setLibraryItems] = useState<any[]>([]);
+
+  // Phase 5: Fetch Item Library
+  useState(() => {
+    fetch('/api/library')
+      .then(res => res.json())
+      .then(data => setLibraryItems(data))
+      .catch(err => console.error(err));
+  });
 
   const handleAIComplete = (data: any) => {
     if (data.detections) {
-      const newItems = generateQuotationStart(data.detections);
+      // Pass libraryItems to the generator
+      const newItems = generateQuotationStart(data.detections, libraryItems);
       setQuotationItems(newItems);
     }
   };

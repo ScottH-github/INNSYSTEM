@@ -8,7 +8,7 @@ export async function GET() {
         projects: true,
       },
       orderBy: {
-        lastInteraction: 'desc',
+        createdAt: 'desc',
       }
     });
     return NextResponse.json(clients);
