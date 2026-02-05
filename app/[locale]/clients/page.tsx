@@ -18,10 +18,10 @@ export default async function ClientsPage() {
     <div className={styles.container}>
       <header className={styles.header}>
         <div>
-          <h1 className={styles.title}>Clients</h1>
-          <p className={styles.subtitle}>Directory of your client relations and design preferences.</p>
+          <h1 className={styles.title}>客戶名單 (Clients)</h1>
+          <p className={styles.subtitle}>管理您的客戶關係與設計偏好。</p>
         </div>
-        <button className={styles.addBtn}>+ New Client Account</button>
+        <button className={styles.addBtn}>+ 新增客戶 (New Client)</button>
       </header>
 
       <div className={styles.grid}>
@@ -38,19 +38,19 @@ export default async function ClientsPage() {
               </div>
               <div className={styles.info}>
                 <h3>{client.name}</h3>
-                <span className={styles.projects}>Active Projects: {client._count.projects}</span>
+                <span className={styles.projects}>進行中專案: {client._count.projects}</span>
               </div>
             </div>
             <div className={styles.tags}>
               {client.preferredStyle ? (
                 <span className={styles.tag}>{client.preferredStyle}</span>
               ) : (
-                <span className={styles.tag} style={{background: 'transparent', border: '1px dashed #ccc'}}>No style pref</span>
+                <span className={styles.tag} style={{background: 'transparent', border: '1px dashed #ccc'}}>無風格偏好</span>
               )}
             </div>
             <div className={styles.actions}>
-              <button className={styles.viewBtn}>Profile Detail</button>
-              <button className={styles.startBtn}>Quick Project</button>
+              <button className={styles.viewBtn}>客戶詳情</button>
+              <button className={styles.startBtn}>快速立案</button>
             </div>
           </div>
         ))}

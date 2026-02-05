@@ -30,6 +30,7 @@ model User {
   projectsManaged Project[] @relation("ManagerProjects")
   reminders     Reminder[]
   aiLogs        AIGenerationLog[]
+  loginLogs     LoginLog[]
 }
 
 enum Role {
@@ -364,4 +365,26 @@ model Reminder {
   repeatType    String?   // DAILY, WEEKLY, MONTHLY
   status        Boolean   @default(false) // true = 已完成
   createdAt     DateTime  @default(now())
+}
+
+// --- 資安審計 ---
+
+model LoginLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  action    String   // LOGIN, LOGOUT
+  ip        String?
+  userAgent String?
+  createdAt DateTime @default(now())
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  email     String
+  token     String   @unique
+  expires   DateTime
+  createdAt DateTime @default(now())
+
+  @@unique([email, token])
 }

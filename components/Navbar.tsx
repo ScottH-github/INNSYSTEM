@@ -6,7 +6,7 @@ const Navbar = () => {
     <nav className={styles.navbar}>
       <div className={styles.container}>
         <div className={styles.breadcrumb}>
-          <span className={styles.companyName}>L'ATELIER OS</span>
+          <span className={styles.companyName}>INNSPACE OS</span>
         </div>
         
         <ul className={styles.navLinks}>
@@ -29,6 +29,19 @@ const Navbar = () => {
           <div className={styles.avatar}>
             <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User" />
           </div>
+          <form action={async () => {
+            'use server';
+            const { handleSignOut } = await import('@/lib/actions');
+            await handleSignOut();
+          }}>
+            <button className={styles.iconBtn} title="Sign Out">
+                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                   <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                   <polyline points="16 17 21 12 16 7"></polyline>
+                   <line x1="21" y1="12" x2="9" y2="12"></line>
+                 </svg>
+            </button>
+          </form>
         </div>
       </div>
     </nav>

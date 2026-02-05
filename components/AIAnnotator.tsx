@@ -75,15 +75,15 @@ export default function AIAnnotator({ initialImage, onAnalysisComplete }: AIAnno
             {isAnalyzing && (
               <div className={styles.scanningOverlay}>
                  <div className={styles.scanLine}></div>
-                 <div className={styles.scanText}>AI Analysis in Progress...</div>
+                 <div className={styles.scanText}>AI 正在分析平面圖...</div>
               </div>
             )}
           </div>
         ) : (
           <div className={styles.emptyState} onClick={() => fileInputRef.current?.click()}>
             <div className={styles.uploadIcon}>☁️</div>
-            <h3>Upload Floor Plan</h3>
-            <p>Drag & drop or Click to browse</p>
+            <h3>上傳平面圖 (Upload Floor Plan)</h3>
+            <p>點擊瀏覽或拖曳檔案至此</p>
           </div>
         )}
         <input 
@@ -96,7 +96,7 @@ export default function AIAnnotator({ initialImage, onAnalysisComplete }: AIAnno
       </div>
       
       <div className={styles.sidebar}>
-        <h3>AI Insights</h3>
+        <h3>AI 分析結果 (Insights)</h3>
         {isAnalyzing ? (
            <div className={styles.loadingList}>
              <div className={styles.skeleton}></div>
@@ -106,8 +106,8 @@ export default function AIAnnotator({ initialImage, onAnalysisComplete }: AIAnno
         ) : detections.length > 0 ? (
           <div className={styles.resultsList}>
             <div className={styles.summaryCard}>
-              <h4>Detected Objects</h4>
-              <span className={styles.countBadge}>{detections.length} items</span>
+              <h4>偵測物件 (Detected Objects)</h4>
+              <span className={styles.countBadge}>{detections.length} 項</span>
             </div>
             {detections.map(det => (
               <div key={det.id} className={styles.resultItem}>
@@ -123,7 +123,7 @@ export default function AIAnnotator({ initialImage, onAnalysisComplete }: AIAnno
           </div>
         ) : (
           <div className={styles.placeholderText}>
-            Upload a floor plan to see AI detection results and cost estimation.
+            請上傳平面圖以查看 AI 偵測結果與預估成本。
           </div>
         )}
       </div>

@@ -9,7 +9,11 @@ import ContractPreview from '@/components/contract/ContractPreview';
 
 import { generateQuotationStart, QuotationItem } from '@/lib/quotation-engine';
 
+import { useParams } from 'next/navigation';
+
 export default function ProjectDetail() {
+  const params = useParams();
+  const projectId = params.id as string;
   const [activeTab, setActiveTab] = useState<'estimation' | 'contract' | 'financials'>('estimation');
   const [quotationItems, setQuotationItems] = useState<QuotationItem[]>([]);
   const [libraryItems, setLibraryItems] = useState<any[]>([]);
@@ -37,25 +41,25 @@ export default function ProjectDetail() {
     <div className={styles.workspace}>
       <header className={styles.header}>
         <div className={styles.topInfo}>
-           <div className={styles.breadcrumb}>Projects / <span>王公館</span></div>
+           <div className={styles.breadcrumb}>專案列表 / <span>王公館</span></div>
            <div className={styles.tabs}>
              <button 
                className={`${styles.tabBtn} ${activeTab === 'estimation' ? styles.activeTab : ''}`}
                onClick={() => setActiveTab('estimation')}
              >
-               Estimation
+               AI 智慧估價 (Estimation)
              </button>
              <button 
                className={`${styles.tabBtn} ${activeTab === 'financials' ? styles.activeTab : ''}`}
                onClick={() => setActiveTab('financials')}
              >
-               Financials
+               財務管理 (Financials)
              </button>
              <button 
                className={`${styles.tabBtn} ${activeTab === 'contract' ? styles.activeTab : ''}`}
                onClick={() => setActiveTab('contract')}
              >
-               Contract
+               合約預覽 (Contract)
              </button>
            </div>
         </div>
@@ -127,8 +131,8 @@ export default function ProjectDetail() {
         {activeTab === 'contract' && (
           <div className={styles.fullWidthContent}>
             <div className={styles.contractToolbar} style={{marginBottom: '1rem', display: 'flex', justifyContent: 'flex-end', gap: '1rem'}}>
-               <span className={styles.statusBadge}>DRAFT</span>
-               <button className={styles.secondaryBtn} onClick={() => window.print()}>🖨️ Print / Export PDF</button>
+               <span className={styles.statusBadge}>草稿 (DRAFT)</span>
+               <button className={styles.secondaryBtn} onClick={() => window.print()}>🖨️ 列印 / 匯出 PDF</button>
             </div>
             <div className={styles.contractScroll}>
               <ContractPreview 
@@ -149,7 +153,7 @@ export default function ProjectDetail() {
 
         {activeTab === 'financials' && (
           <div className={styles.fullWidthContent}>
-            <ProjectFinancials totalRevenue={1250000} totalExpenses={850000} />
+            <ProjectFinancials projectId={projectId} />
           </div>
         )}
       </div>

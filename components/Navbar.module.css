@@ -27,7 +27,53 @@
 
 .navLinks {
   display: flex;
-  gap: 3rem;
+  gap: 2rem;
+  margin-left: auto;
+  margin-right: 3rem;
+  align-items: center;
+}
+
+.navLinks li {
+  display: flex;
+  align-items: center;
+}
+
+.navLinks li::before {
+  content: "•";
+  color: var(--text-muted);
+  margin-right: 2rem;
+  font-size: 0.8rem;
+}
+
+.navLinks li:first-child::before {
+  display: none; 
+}
+
+/* User screenshot implies bullets are separators, possibly not on first item? 
+   Screenshot: "• 首頁". Wait, screenshot has DOT before Home?
+   "INNSPACE OS • 首頁" -> implies breadcrumb separator? 
+   Or just list bullets. The screenshot shows "• 首頁 • 產品 • 關於我們".
+   So even the first item has a dot?
+   If so, I will remove the first-child exception or adjust.
+   Let's assume standard separator style: Item • Item • Item.
+   The screenshot shows "•" before EACH item including the first? 
+   "INNSPACE OS [gap] • 首頁". 
+   I will enable it for all items.
+*/
+
+.navLinks li::before {
+  content: "•";
+  color: var(--text-muted);
+  margin-right: 1.5rem; /* Space between dot and text */
+  margin-left: -1rem; /* Adjustment */
+}
+
+/* Cleaning up the previous block logic */
+.navLinks li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Gap between dot and text if using flex gap, but using ::before content helps alignment */
 }
 
 .link {
@@ -35,6 +81,19 @@
   color: var(--text-muted);
   transition: var(--transition);
   font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+/* Re-doing the bullet logic to match screenshot precisely: 
+   Bullet - Text - Bullet - Text
+   Actually, I'll use a simpler approach: 
+   List items have a bullet before them.
+*/
+.navLinks li::before {
+  content: "•";
+  margin-right: 1rem;
+  color: var(--text-muted);
 }
 
 .link:hover {
@@ -53,10 +112,14 @@
   align-items: center;
   justify-content: center;
   transition: var(--transition);
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
 }
 
 .iconBtn:hover {
   color: var(--foreground);
+  background: rgba(0,0,0,0.03);
 }
 
 .avatar {

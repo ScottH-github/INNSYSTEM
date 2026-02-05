@@ -15,13 +15,14 @@
 
 .logo {
   margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
 }
 
-.logoIcon {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--foreground);
+.logoImage {
+  width: 40px;
+  height: auto;
+  object-fit: contain;
 }
 
 .nav {

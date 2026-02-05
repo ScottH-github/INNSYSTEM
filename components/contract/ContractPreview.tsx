@@ -75,7 +75,7 @@ export default function ContractPreview({ project, items, totalAmount }: Contrac
           </tbody>
           <tfoot>
             <tr>
-              <td colSpan={3} className={styles.right}><strong>總計 Total</strong></td>
+              <td colSpan={3} className={styles.right}><strong>總計 (Total)</strong></td>
               <td className={styles.right}><strong>${totalAmount.toLocaleString()}</strong></td>
             </tr>
           </tfoot>
@@ -96,7 +96,7 @@ export default function ContractPreview({ project, items, totalAmount }: Contrac
       </div>
       
       <div className={styles.footer}>
-        Page 1 of 1
+        第 1 頁 / 共 1 頁
       </div>
     </div>
   );
